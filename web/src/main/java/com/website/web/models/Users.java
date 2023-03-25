@@ -1,47 +1,72 @@
 package com.website.web.models;
 
-import javax.persistence.Entity;
-import jakarta.persistence.*;
+import com.website.web.enums.Role;
 import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.awt.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
-@Table(name = "Users")
-public class Users
-{
+@Table(name = "users")
+public class Users implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
-    private String name, pass;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
+    @Column(name = "phone", unique = true)
+    private String phone;
+    @Column(name = "email", unique = true)
+    private String email;
+    @Column(name = "password", length = 1000)
+    private String password;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @CollectionTable(name = "image", joinColumns = @JoinColumn(name = "id"))
+    @JoinColumn(name = "id")
+    private Image avatar;
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles = new HashSet<>();
+    @Column(name = "active")
+    private boolean active;
 
-    public Users(Long id, String name, String pass) {
-
-        this.id = id;
-        this.name = name;
-        this.pass = pass;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
     }
 
-    public Long getId() {
-        return id;
+    @Override
+    public String getUsername() {
+        return email;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getName() {
-        return name;
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
+    @Override
+    public boolean isEnabled() {
+        return active;
     }
 }

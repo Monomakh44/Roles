@@ -1,0 +1,50 @@
+    p, body, td, input, select, button {
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    font-size: 14px;
+}
+
+body {
+    background-image: url('https://catherineasquithgallery.com/uploads/posts/2021-02/1613546319_56-p-belii-fon-dlya-prezentatsii-powerpoint-60.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+}
+
+.space {
+    margin: 10px 0px 10px 0px;
+}
+
+.main {
+    padding: 10px;
+    margin-top: 10px;
+}
+
+/* context menu icons */
+.icon:before {
+    position: absolute;
+    margin-top: 3px;
+    width: 14px;
+    height: 14px;
+    content: '';
+}
+
+.icon-blue:before {
+    background-color: #1066a8;
+}
+
+.icon-green:before {
+    background-color: #6aa84f;
+}
+
+.icon-yellow:before {
+    background-color: #f1c232;
+}
+
+.icon-red:before {
+    background-color: #cc0000;
+}
+.navigator_default_cell.navigator-disabled-cell {
+    background-color: #ddd !important;
+    color: #888;
+    cursor: not-allowed !important;
+}
