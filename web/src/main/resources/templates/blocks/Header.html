@@ -49,7 +49,7 @@
 
                     <div class="dropdown">
                         <button type="button" style="border: none; background: #212529" class="link-light dropdown-toggle" data-toggle="dropdown">
-                            <img src="https://e7.pngegg.com/pngimages/980/304/png-clipart-computer-icons-user-profile-avatar-heroes-silhouette.png" alt="mdo" width="42" height="42" class="rounded-circle">
+                            <img th:src="@{/images/avatar.png}" alt="mdo" width="42" height="42" class="rounded-circle">
                         </button>
                         <ul class="dropdown-menu" sec:authorize="isAuthenticated()">
                             <li><a class="dropdown-item" href="profile">Профиль</a></li>

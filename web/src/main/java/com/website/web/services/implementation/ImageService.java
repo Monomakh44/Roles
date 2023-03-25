@@ -11,9 +11,14 @@ public class ImageService implements IImageService {
     @Autowired
     private ImageRepository imageRepository;
     public void add(Image image){
-        imageRepository.save(image);
+        Image savedImage = imageRepository.save(image);
+        image.setId(savedImage.getId());
     }
     public Image getImageById(Long id) {
         return imageRepository.findById(id).orElse(null);
+    }
+
+    public void remove(Image image){
+        imageRepository.delete(image);
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,10 +28,10 @@ public class Users implements UserDetails {
     private String email;
     @Column(name = "password", length = 1000)
     private String password;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @CollectionTable(name = "image", joinColumns = @JoinColumn(name = "id"))
-    @JoinColumn(name = "id")
-    private Image avatar;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

@@ -13,7 +13,7 @@
 <div th:insert="blocks/Header.html :: header"></div>
 <div class="container mt-5" style="text-align: center; padding-top: 60px"/>
 <h1> Профиль пользователя </h1>
-<img th:src="@{/images/avatar.png}" style="border:1px solid black; border-radius: 100px" height="200"/>
+<img th:src="'data:image/png;base64,' + ${avatar}" style="border:1px solid black; border-radius: 100%" height="200" width="200"/>
 <form class="px-4 py-3" action="/profile" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <div class="custom-file">
