@@ -15,4 +15,7 @@ public class Image {
 
     @Column(name = "bytes")
     private byte[] bytes;
+
+    @OneToOne(mappedBy = "image")
+    private Users users;
 }

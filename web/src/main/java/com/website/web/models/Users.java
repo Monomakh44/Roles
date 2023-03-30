@@ -2,6 +2,8 @@ package com.website.web.models;
 
 import com.website.web.enums.Role;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,7 +14,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "users")
 public class Users implements UserDetails {
     @Id
@@ -29,10 +32,8 @@ public class Users implements UserDetails {
     private String email;
     @Column(name = "password", length = 1000)
     private String password;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @CollectionTable(name = "image", joinColumns = @JoinColumn(name = "id"))
-    @JoinColumn(name = "id")
-    private Image avatar;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)

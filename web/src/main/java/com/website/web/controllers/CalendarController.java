@@ -3,21 +3,31 @@ package com.website.web.controllers;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.website.web.models.Home;
+import com.website.web.models.Image;
+import com.website.web.models.Users;
 import com.website.web.repositories.HomeRepository;
+import com.website.web.services.interfaces.IImageService;
+import com.website.web.services.interfaces.IUserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.codec.Base64;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.nio.file.Files;
+import java.security.Principal;
 import java.time.LocalDateTime;
 
 @RestController
 public class CalendarController {
     @Autowired
     HomeRepository homeRepository;
-
+    @Autowired
+    private IUserService userService;
     @GetMapping("/home/events")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     public Iterable<Home> events(@RequestParam(value = "start") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime start, @RequestParam(value = "end") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime end) {
@@ -27,12 +37,14 @@ public class CalendarController {
     @PostMapping("/home/events/create")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home createEvent(@RequestBody EventCreateParams params) {
-
+    public Home createEvent(@RequestBody EventCreateParams params, Principal principal) {
+        Users user = userService.getUserByPrincipal(principal);
         Home home = new Home();
         home.setStart(params.start);
         home.setStop(params.end);
         home.setText(params.text);
+        home.setName(user.getName());
+        home.setSurname(user.getSurname());
         homeRepository.save(home);
         return home;
     }

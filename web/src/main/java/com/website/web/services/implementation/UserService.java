@@ -6,12 +6,14 @@ import com.website.web.repositories.UsersRepository;
 import com.website.web.services.interfaces.IUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,7 +26,29 @@ public class UserService implements IUserService {
 
     @Override
     public List<Users> findAll() {
-        return usersRepository.findAll();
+        List<Users> users = usersRepository.findAll();
+        Set<Role> roles = new HashSet<>();
+        roles.add(Role.USER);
+        for (int i = 0; i < users.size(); i++){
+            if(users.get(i).getRoles().equals(roles));
+            {
+                return users;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void banUser(Long id) {
+        Users user = usersRepository.findById(id).orElse(null);
+        if (user != null) {
+            if (user.isActive()) {
+                user.setActive(false);
+            } else {
+                user.setActive(true);
+            }
+        }
+        usersRepository.save(user);
     }
 
     @Override

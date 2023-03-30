@@ -10,10 +10,17 @@ import org.springframework.stereotype.Service;
 public class ImageService implements IImageService {
     @Autowired
     private ImageRepository imageRepository;
+    @Override
     public void add(Image image){
-        imageRepository.save(image);
+        Image savedImage = imageRepository.save(image);
+        image.setId(savedImage.getId());
     }
+    @Override
     public Image getImageById(Long id) {
         return imageRepository.findById(id).orElse(null);
+    }
+    @Override
+    public void remove(Image image){
+        imageRepository.delete(image);
     }
 }

@@ -22,6 +22,10 @@ public class Home {
     private LocalDateTime stop;
     @Column(name = "color")
     private String color;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "surname")
+    private String surname;
 
     public LocalDateTime getStart() {
         return start;
