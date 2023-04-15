@@ -7,7 +7,7 @@ import java.security.Principal;
 import java.util.List;
 
 public interface IUserService{
-    List<Users> findAll();
+    List<Users> findAllNoAdmin();
     void banUser(Long id);
     boolean save(Users users);
     void deleteById(Long id);

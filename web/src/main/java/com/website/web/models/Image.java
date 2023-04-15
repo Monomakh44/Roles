@@ -8,9 +8,10 @@ import javax.persistence.*;
 @Data
 @Table(name = "image")
 public class Image {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "bytes")

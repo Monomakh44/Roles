@@ -1,5 +1,6 @@
 package com.website.web.models;
 
+import com.website.web.enums.Role;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -26,6 +27,8 @@ public class Home {
     private String name;
     @Column(name = "surname")
     private String surname;
+    @Column(name = "user_id")
+    private Long userId;
 
     public LocalDateTime getStart() {
         return start;

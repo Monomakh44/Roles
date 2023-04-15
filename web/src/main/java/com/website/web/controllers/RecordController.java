@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
 
 @Controller
-public class HomeController {
+public class RecordController {
     @Autowired
     private IGetImageService getImageService;
     @SneakyThrows
-    @GetMapping("/home")
-    public String calendar(Model model, Principal principal) {
+    @GetMapping("/record")
+    public String Record(Model model, Principal principal) {
         getImageService.image(model, principal);
-        return "Home";
+        return "Record";
     }
 }

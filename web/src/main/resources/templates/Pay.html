@@ -11,7 +11,7 @@
 <div th:insert="blocks/Header.html :: header"></div>
 <div class="container mt-5" style="padding-top: 60px"/>
     <div class="col-md-7 col-lg-8" style="margin: 0 auto">
-        <center><h4 class="mb-3">Данные пользователя</h4></center>
+        <h4 style="text-align: center" class="mb-3">Данные пользователя</h4>
         <form class="needs-validation">
             <div class="row g-3">
                 <div class="col-sm-6">
@@ -68,7 +68,7 @@
 
             <hr class="my-4">
 
-            <center><h4 class="mb-3">Оплата</h4></center>
+            <h4 style="text-align: center" class="mb-3">Оплата</h4>
 
             <div class="mb-3">
                 <div class="form-check">
@@ -113,6 +113,6 @@
             <button class="w-100 btn btn-primary btn-lg" type="submit">Оплатить</button>
         </form>
     </div>
-<footer class="footer" th:insert="blocks/Footer.html :: footer"/>
+<footer th:insert="blocks/Footer.html :: footer"></footer>
 </body>
 </html>

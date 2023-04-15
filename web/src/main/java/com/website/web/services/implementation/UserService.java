@@ -1,6 +1,7 @@
 package com.website.web.services.implementation;
 
 import com.website.web.enums.Role;
+import com.website.web.models.Image;
 import com.website.web.models.Users;
 import com.website.web.repositories.UsersRepository;
 import com.website.web.services.interfaces.IUserService;
@@ -8,9 +9,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,17 +29,16 @@ public class UserService implements IUserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public List<Users> findAll() {
+    public List<Users> findAllNoAdmin() {
         List<Users> users = usersRepository.findAll();
-        Set<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        for (int i = 0; i < users.size(); i++){
-            if(users.get(i).getRoles().equals(roles));
-            {
-                return users;
+        List<Users> user = new ArrayList<>();
+        Role role = Role.USER;
+        for (Users value : users) {
+            if (value.getRoles().contains(role)) {
+                user.add(value);
             }
         }
-        return null;
+        return user;
     }
 
     @Override
@@ -48,6 +51,7 @@ public class UserService implements IUserService {
                 user.setActive(true);
             }
         }
+        assert user != null;
         usersRepository.save(user);
     }
 

@@ -8,12 +8,12 @@
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div th:insert="blocks/Header.html :: header"/>
-<div class="container mt-5" style="padding-top: 60px; flex: 1 0 auto;">
-    <div class="container mt-3">
+<header th:insert="blocks/Header.html :: header"></header>
+<div class="container mt-5" style="padding-top: 50px;">
+    <div class="mt-3">
         <img src="https://img.freepik.com/premium-photo/attractive-students-working-in-library-at-university_107420-1916.jpg?w=1380"
-             width="1250" height="500">
-        <table th:each="info : ${info}" class="alert alert-info mt-2">
+             width="1270" height="500"/>
+        <table th:each="info : ${info}">
             <h2 th:text="${info.title1}"/>
             <p th:text="${info.teg1}"/>
             <h3 th:text="${info.title2}"/>
@@ -23,6 +23,6 @@
         </table>
     </div>
 </div>
-<footer th:insert="blocks/Footer.html :: footer"/>
+<footer th:insert="blocks/Footer.html :: footer"></footer>
 </body>
 </html>

@@ -31,6 +31,7 @@
 
                     <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                         <li><a href="home" class="nav-link px-2 link-light">Главная</a></li>
+                        <li><a href="record" class="nav-link px-2 link-light">Запись</a> </li>
                         <li><a href="customer" class="nav-link px-2 link-light">Клиенты</a></li>
                         <li><a href="contact" class="nav-link px-2 link-light">Контакты</a></li>
                         <li><a href="info" class="nav-link px-2 link-light">О компании</a></li>
@@ -57,8 +58,8 @@
                         <ul class="dropdown-menu" sec:authorize="isAuthenticated()">
                             <li><a class="dropdown-item" href="profile">Профиль</a></li>
                             <li><a class="dropdown-item" href="users" sec:authorize="hasAnyAuthority('ADMIN')">Пользователи</a></li>
-                            <li><a class="dropdown-item" href="#">Записи</a></li>
-                            <li><a class="dropdown-item" href="users" sec:authorize="hasAnyAuthority('ADMIN')">Видеозаписи</a></li>
+                            <li><a class="dropdown-item" href="booking">Записи</a></li>
+                            <li><a class="dropdown-item" href="#" sec:authorize="hasAnyAuthority('ADMIN')">Видеозаписи</a></li>
                             <li><a class="dropdown-item" href="#">QR-код</a></li>
                             <hr>
                             <li>

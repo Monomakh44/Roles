@@ -8,9 +8,9 @@
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div th:insert="blocks/Header.html :: header"/>
+<div th:insert="blocks/Header.html :: header"></div>
 <div class="container mt-5" style="padding-top: 60px"/>
-<center><h1> Контакты </h1></center>
+<h1 style="text-align: center"> Контакты </h1></center>
 <div class="mt-5">
 <iframe src="https://yandex.ru/maps/-/CCUGbQxsKD" width="700" height="600" style="border:0; float: right"; allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 <div>
@@ -53,7 +53,7 @@
         <p style="margin-left: 140px; font-size: 20px">пн-пт с 08.00 до 18.00<br>сб-вс выходной</p>
     </a>
 </div>
-    <footer class="footer" th:insert="blocks/Footer.html :: footer"/>
+    <footer class="footer" th:insert="blocks/Footer.html :: footer"></footer>
 </div>
 </body>
 </html>

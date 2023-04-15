@@ -28,13 +28,13 @@ public class CalendarController {
     HomeRepository homeRepository;
     @Autowired
     private IUserService userService;
-    @GetMapping("/home/events")
+    @GetMapping("/record/events")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     public Iterable<Home> events(@RequestParam(value = "start") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime start, @RequestParam(value = "end") @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime end) {
         return homeRepository.findBetween(start, end);
     }
 
-    @PostMapping("/home/events/create")
+    @PostMapping("/record/events/create")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
     public Home createEvent(@RequestBody EventCreateParams params, Principal principal) {
@@ -43,52 +43,78 @@ public class CalendarController {
         home.setStart(params.start);
         home.setStop(params.end);
         home.setText(params.text);
+        home.setUserId(user.getId());
         home.setName(user.getName());
         home.setSurname(user.getSurname());
         homeRepository.save(home);
         return home;
     }
 
-    @PostMapping("/home/events/move")
+    @PostMapping("/record/events/modal")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home moveEvent(@RequestBody EventMoveParams params) {
-
+    public Home editEventModal(@RequestBody EventModalParams params, Principal principal) {
+        Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
-        home.setStart(params.start);
-        home.setStop(params.end);
-        homeRepository.save(home);
+        if(home.getUserId().equals(user.getId())) {
+            home.setStart(params.start);
+            home.setStop(params.end);
+            home.setText(params.text);
+            home.setColor(params.color);
+            homeRepository.save(home);
+        }
         return home;
     }
 
-    @PostMapping("/home/events/edit")
+    @PostMapping("/record/events/move")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home EditEvent(@RequestBody EventEditParams params) {
-
+    public Home moveEvent(@RequestBody EventMoveParams params, Principal principal) {
+        Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
-        home.setText(params.text);
-        homeRepository.save(home);
+        if(home.getUserId().equals(user.getId())) {
+            home.setStart(params.start);
+            home.setStop(params.end);
+            homeRepository.save(home);
+        }
+        return home;
+    }
+
+    @PostMapping("/record/events/edit")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @Transactional
+    public Home editEvent(@RequestBody EventEditParams params, Principal principal) {
+        Users user = userService.getUserByPrincipal(principal);
+        Home home = homeRepository.findById(params.id).get();
+        if(home.getUserId().equals(user.getId())) {
+            home.setText(params.text);
+            homeRepository.save(home);
+        }
         return home;
     }
 
 
-    @PostMapping("/home/events/setColor")
+    @PostMapping("/record/events/setColor")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home setColor(@RequestBody SetColorParams params) {
-
+    public Home setColor(@RequestBody SetColorParams params, Principal principal) {
+        Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
-        home.setColor(params.color);
-        homeRepository.save(home);
+        if(home.getUserId().equals(user.getId())) {
+            home.setColor(params.color);
+            homeRepository.save(home);
+        }
         return home;
     }
-    @PostMapping("/home/events/delete")
+    @PostMapping("/record/events/delete")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home deleteEvent(@RequestBody EventDeleteParams params) {
+    public Home deleteEvent(@RequestBody EventDeleteParams params, Principal principal) {
+        Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
-        homeRepository.delete(home);
+        if(home.getUserId().equals(user.getId())) {
+            homeRepository.delete(home);
+        }
         return home;
     }
 
@@ -99,14 +125,19 @@ public class CalendarController {
         public LocalDateTime start;
         public LocalDateTime end;
         public String text;
-        public Long resource;
+    }
+    public static class EventModalParams {
+        public Long id;
+        public LocalDateTime start;
+        public LocalDateTime end;
+        public String text;
+        public String color;
     }
 
     public static class EventMoveParams {
         public Long id;
         public LocalDateTime start;
         public LocalDateTime end;
-        public Long resource;
     }
 
     public static class SetColorParams {
