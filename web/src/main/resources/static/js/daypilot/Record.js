@@ -83,38 +83,18 @@ dp.onTimeRangeSelected = function (args) {
     });
 };
 dp.onEventClicked = function (args) {
+    const colors = [
+        {name: "Синий", id: "#1066a8"},
+        {name: "Зелёный", id: "#6aa84f"},
+        {name: "Жёлтый", id: "#f1c232"},
+        {name: "Красный", id: "#cc0000"},
+    ];
     const form = [
         {name: "Изменение события"},
         {name: "Тема", id: "text"},
         {name: "Начало", id: "start", type: "datetime"},
         {name: "Конец", id: "end", type: "datetime"},
-        {
-            type: 'select',
-            id: 'color',
-            name: 'Цвет',
-            options: [
-                {
-                    color: "#1066a8",
-                    name: 'Синий',
-                    id: 'blue',
-                },
-                {
-                    color: "#6aa84f",
-                    name: 'Зелёный',
-                    id: 'green',
-                },
-                {
-                    color: "#f1c232",
-                    name: 'Жёлтый',
-                    id: 'yellow',
-                },
-                {
-                    color: "#cc0000",
-                    name: 'Красный',
-                    id: 'red',
-                },
-            ],
-        },
+        {name: "Цвет", id: "color", type: "select", options: colors},
     ];
     DayPilot.Modal.form(form, args.e.data).then(function (modal){
         const dp = args.control;

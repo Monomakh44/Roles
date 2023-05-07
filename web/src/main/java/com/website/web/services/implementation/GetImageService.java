@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 
 import java.io.File;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.Principal;
 
 @Service
@@ -28,7 +29,7 @@ public class GetImageService implements IGetImageService {
             image = imageService.getImageById(user.getImage().getId());
         } else {
             String imagePath = "web/src/main/resources/static/images/avatar.png";
-            image.setBytes(Files.readAllBytes(new File(imagePath).toPath()));
+            image.setBytes(Files.readAllBytes(Path.of(new File(imagePath).getAbsolutePath())));
         }
 
         byte[] encodeBase64 = Base64.encode(image.getBytes());

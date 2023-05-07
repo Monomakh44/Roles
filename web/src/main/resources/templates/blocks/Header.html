@@ -59,8 +59,8 @@
                             <li><a class="dropdown-item" href="profile">Профиль</a></li>
                             <li><a class="dropdown-item" href="users" sec:authorize="hasAnyAuthority('ADMIN')">Пользователи</a></li>
                             <li><a class="dropdown-item" href="booking">Записи</a></li>
-                            <li><a class="dropdown-item" href="#" sec:authorize="hasAnyAuthority('ADMIN')">Видеозаписи</a></li>
-                            <li><a class="dropdown-item" href="#">QR-код</a></li>
+                            <li><a class="dropdown-item" href="liveVideo" sec:authorize="hasAnyAuthority('ADMIN')">Прямая трансляция</a></li>
+                            <li><a class="dropdown-item" href="recordVideo" sec:authorize="hasAnyAuthority('ADMIN')">Видеозаписи</a></li>
                             <hr>
                             <li>
                                 <form action="/logout" method="post" style="border: none">
