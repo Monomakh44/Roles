@@ -32,7 +32,6 @@ public class BookingController {
     public String booking(Model model, Principal principal){
         Iterable<Home> home = homeService.findAllById(principal);
         model.addAttribute("homeId", home);
-
         getImageService.image(model, principal);
         return "Booking";
     }

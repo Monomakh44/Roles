@@ -33,12 +33,12 @@ dp.height = 691;
 dp.allowEventOverlap = false;
 dp.columnMarginRight = 0;
 dp.viewType = "Week";
+/*dp.timeHeaderCellDuration = 45;*/
 
 dp.onBeforeCellRender = function (args) {
     const now = new DayPilot.Date().getTime();
     if (args.cell.start.getTime() <= now) {
         args.cell.disabled = true;
-        args.cell.BackColor = "#eee";
     }
 };
 
@@ -83,40 +83,40 @@ dp.onTimeRangeSelected = function (args) {
     });
 };
 dp.onEventClicked = function (args) {
-    const colors = [
-        {name: "Синий", id: "#1066a8"},
-        {name: "Зелёный", id: "#6aa84f"},
-        {name: "Жёлтый", id: "#f1c232"},
-        {name: "Красный", id: "#cc0000"},
-    ];
-    const form = [
-        {name: "Изменение события"},
-        {name: "Тема", id: "text"},
-        {name: "Начало", id: "start", type: "datetime"},
-        {name: "Конец", id: "end", type: "datetime"},
-        {name: "Цвет", id: "color", type: "select", options: colors},
-    ];
-    DayPilot.Modal.form(form, args.e.data).then(function (modal){
-        const dp = args.control;
-        if (!modal.result) {
-            return;
-        }
-        const params = {
-            id: args.e.id(),
-            start: modal.result.start,
-            end: modal.result.end,
-            text: modal.result.text,
-            color: modal.result.color
-        }
-        DayPilot.Http.ajax({
-            url: '/record/events/modal',
-            data: params,
-            success: function (ajax) {
-                dp.events.update(modal.result);
-                dp.message("Событие изменено");
+        const colors = [
+            {name: "Синий", id: "#1066a8"},
+            {name: "Зелёный", id: "#6aa84f"},
+            {name: "Жёлтый", id: "#f1c232"},
+            {name: "Красный", id: "#cc0000"},
+        ];
+        const form = [
+            {name: "Изменение события"},
+            {name: "Тема", id: "text"},
+            {name: "Начало", id: "start", type: "datetime"},
+            {name: "Конец", id: "end", type: "datetime"},
+            {name: "Цвет", id: "color", type: "select", options: colors},
+        ];
+        DayPilot.Modal.form(form, args.e.data).then(function (modal) {
+            const dp = args.control;
+            if (!modal.result) {
+                return;
             }
+            const params = {
+                id: args.e.id(),
+                start: modal.result.start,
+                end: modal.result.end,
+                text: modal.result.text,
+                color: modal.result.color
+            }
+            DayPilot.Http.ajax({
+                url: '/record/events/modal',
+                data: params,
+                success: function (ajax) {
+                    dp.events.update(modal.result);
+                    dp.message("Событие изменено");
+                }
+            });
         });
-    });
 };
 
 dp.bubble = new DayPilot.Bubble();

@@ -53,7 +53,7 @@ public class CalendarController {
     @PostMapping("/record/events/modal")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home editEventModal(@RequestBody EventModalParams params, Principal principal) {
+    public Home editEventModal(@RequestBody EventModalParams params, Principal principal, Model model) {
         Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
         if(home.getUserId().equals(user.getId())) {
@@ -62,34 +62,35 @@ public class CalendarController {
             home.setText(params.text);
             home.setColor(params.color);
             homeRepository.save(home);
-        }
+        }else model.addAttribute("errorMessage", "Отклонено, обновите страницу");
         return home;
     }
 
     @PostMapping("/record/events/move")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home moveEvent(@RequestBody EventMoveParams params, Principal principal) {
+    public Home moveEvent(@RequestBody EventMoveParams params, Principal principal, Model model) {
         Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
         if(home.getUserId().equals(user.getId())) {
             home.setStart(params.start);
             home.setStop(params.end);
             homeRepository.save(home);
-        }
+        }else model.addAttribute("errorMessage", "Отклонено, обновите страницу");
         return home;
     }
 
     @PostMapping("/record/events/edit")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home editEvent(@RequestBody EventEditParams params, Principal principal) {
+    public Home editEvent(@RequestBody EventEditParams params, Principal principal, Model model) {
         Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
         if(home.getUserId().equals(user.getId())) {
             home.setText(params.text);
             homeRepository.save(home);
         }
+        else model.addAttribute("errorMessage", "Отклонено, обновите страницу");
         return home;
     }
 
@@ -97,24 +98,24 @@ public class CalendarController {
     @PostMapping("/record/events/setColor")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home setColor(@RequestBody SetColorParams params, Principal principal) {
+    public Home setColor(@RequestBody SetColorParams params, Principal principal, Model model) {
         Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
         if(home.getUserId().equals(user.getId())) {
             home.setColor(params.color);
             homeRepository.save(home);
-        }
+        }else model.addAttribute("errorMessage", "Отклонено, обновите страницу");
         return home;
     }
     @PostMapping("/record/events/delete")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Transactional
-    public Home deleteEvent(@RequestBody EventDeleteParams params, Principal principal) {
+    public Home deleteEvent(@RequestBody EventDeleteParams params, Principal principal, Model model) {
         Users user = userService.getUserByPrincipal(principal);
         Home home = homeRepository.findById(params.id).get();
         if(home.getUserId().equals(user.getId())) {
             homeRepository.delete(home);
-        }
+        }else model.addAttribute("errorMessage", "Отклонено, обновите страницу");
         return home;
     }
 

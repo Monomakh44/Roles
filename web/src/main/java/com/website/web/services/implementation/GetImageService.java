@@ -31,8 +31,8 @@ public class GetImageService implements IGetImageService {
         if (user.getImage() != null){
             image = imageService.getImageById(user.getImage().getId());
         } else {
-            String imagePath = "web/src/main/resources/static/images/avatar.png";
-            /*image.setBytes(Files.readAllBytes(Path.of(new File(imagePath).getAbsolutePath())));*/
+/*            String imagePath = "web/src/main/resources/static/images/avatar.png";
+            image.setBytes(Files.readAllBytes(Path.of(new File(imagePath).getAbsolutePath())));*/
             URL url = new URL("https://w7.pngwing.com/pngs/980/304/png-transparent-computer-icons-user-profile-avatar-heroes-silhouette-avatar.png");
             InputStream inputStream      = url.openStream();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -44,8 +44,8 @@ public class GetImageService implements IGetImageService {
             inputStream.close();
             image.setBytes(output.toByteArray());
         }
-        byte[] encodeBase64 = Base64.encode(image.getBytes());
+/*        byte[] encodeBase64 = Base64.encode(image.getBytes());
         String base64Encoded = new String(encodeBase64, "UTF-8");
-        model.addAttribute("avatar", base64Encoded);
+        model.addAttribute("avatar", base64Encoded);*/
     }
 }

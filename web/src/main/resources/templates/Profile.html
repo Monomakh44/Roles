@@ -39,8 +39,8 @@
     </div>
 </div>
 <a th:each="user : ${user}">
-    <a th:text="${user.email}"/><br>
-    <a th:text="${user.name} + ' ' + ${user.surname}"/>
+    <b th:text="${user.email}"/><br>
+    <b th:text="${user.name} + ' ' + ${user.surname}"/>
 </a>
 <footer class="footer" th:insert="blocks/Footer.html :: footer"></footer>
 </body>

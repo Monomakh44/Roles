@@ -3,6 +3,7 @@ package com.website.web.controllers;
 import com.website.web.models.Home;
 import com.website.web.models.Image;
 import com.website.web.models.Users;
+import com.website.web.services.interfaces.IGetImageService;
 import com.website.web.services.interfaces.IHomeService;
 import com.website.web.services.interfaces.IImageService;
 import com.website.web.services.interfaces.IUserService;
@@ -22,27 +23,13 @@ public class CustomersController {
     @Autowired
     private IHomeService homeService;
     @Autowired
-    private IUserService userService;
-    @Autowired
-    private IImageService imageService;
+    private IGetImageService getImageService;
     @SneakyThrows
     @GetMapping("/customer")
     public String Customers(Model model, Principal principal) {
         Iterable<Home> home = homeService.findAll();
+        getImageService.image(model, principal);
         model.addAttribute("home", home);
-
-        Users user = userService.getUserByPrincipal(principal);
-        Image image = new Image();
-        if (user.getImage() != null) {
-            image = imageService.getImageById(user.getImage().getId());
-        } else {
-            String imagePath = "web/src/main/resources/static/images/avatar.png";
-            image.setBytes(Files.readAllBytes(new File(imagePath).toPath()));
-        }
-
-        byte[] encodeBase64 = Base64.encode(image.getBytes());
-        String base64Encoded = new String(encodeBase64, "UTF-8");
-        model.addAttribute("avatar", base64Encoded);
         return "Customers";
     }
 }

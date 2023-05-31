@@ -13,6 +13,7 @@ import java.security.Principal;
 public class RecordController {
     @Autowired
     private IGetImageService getImageService;
+
     @SneakyThrows
     @GetMapping("/record")
     public String Record(Model model, Principal principal) {
