@@ -47,6 +47,12 @@ create table "user_role"
     user_id bigint primary key,
     roles   varchar(120)
 );
+create table "url"
+(
+    id bigint primary key,
+    date   timestamp,
+    url    varchar(1000)
+);
 
 CREATE SEQUENCE hibernate_sequence START 1;
 insert into "home" values (179,'Тематика','2023-04-11 14:00:00','2023-04-11 14:30:00',NULL,'Данила','Чистяков',153);
